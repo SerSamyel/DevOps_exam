@@ -1,0 +1,18 @@
+---
+- name: front play
+  hosts: front
+  gather_facts: no
+  become: yes
+
+  tasks:
+    - name: Install Caddy
+      include_role:
+        name: caddy
+
+    - name: Configure Caddy
+      include_role:
+        name: caddy
+        tasks_from: my_app.yml
+      vars:
+        caddy_reverse_proxy: "{{ local_my_app_socket }}"
+        caddy_external_listen_port: "{{ local_external_listen_port }}"

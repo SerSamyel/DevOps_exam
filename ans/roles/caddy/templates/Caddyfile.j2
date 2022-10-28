@@ -1,0 +1,4 @@
+:{{ template_caddy_external_listen_port }} {
+        file_server browse
+        reverse_proxy {{ template_caddy_reverse_proxy }}
+}

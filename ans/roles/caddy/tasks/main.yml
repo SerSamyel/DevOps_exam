@@ -1,0 +1,29 @@
+---
+- name: Add the repo signing key into a specific file
+  apt_key:
+    url: https://dl.cloudsmith.io/public/caddy/stable/gpg.key
+    state: present
+    keyring: /etc/apt/trusted.gpg.d/caddy.gpg
+
+- name: Add the Repository signed by the key from the previous step
+  apt_repository:
+    repo: deb [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/caddy.gpg] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
+    filename: caddy
+    state: present
+
+- name: Add the Repository signed by the key from the previous step
+  apt_repository:
+    repo: deb-src [arch=amd64 signed-by=/etc/apt/trusted.gpg.d/caddy.gpg] https://dl.cloudsmith.io/public/caddy/stable/deb/debian any-version main
+    filename: caddy
+    state: present
+
+- name: Install caddy package
+  apt:
+    update_cache: yes
+    state: present
+    name: caddy
+
+- name: Reload caddy service, just in case
+  systemd:
+    name: caddy.service
+    state: reloaded

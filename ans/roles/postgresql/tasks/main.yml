@@ -1,0 +1,10 @@
+---
+- name: Install postgresql packages
+  apt:
+    update_cache: yes
+    pkg:
+      - acl
+      - postgresql
+      - libpq-dev
+    # state: absent - удалить все установленное
+...

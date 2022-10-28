@@ -1,0 +1,7 @@
+---
+app_db_connect_user: MyDBUser
+app_db_connect_name: myappdatabase
+app_db_connect_host: 127.0.0.1
+app_db_connect_port: 5432
+app_db_connect_password: MySecretPassword
+...

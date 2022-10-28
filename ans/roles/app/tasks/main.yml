@@ -1,0 +1,45 @@
+---
+- name: install python3-pip
+  apt:
+    name: python3-pip
+    update_cache: yes
+
+- name: install pip3 packages
+  pip:
+    name: "{{ item }}"
+  loop:
+    - flask
+    - psycopg2-binary
+
+- name: create directory
+  file:
+    state: directory
+    path: "{{ my_app_directory }}"
+
+- name: create app.py
+  copy:
+    src: files/app.py
+    dest: "{{ my_app_directory }}/app.py"
+
+- name: create app.env
+  copy:
+    src: "files/app.env"
+    dest: "{{ my_app_directory }}/app.env"
+    
+
+- name: create user
+  user:
+    name: "{{ my_app_user }}"
+    shell: /bin/false       
+    system: yes             
+    create_home: no         
+    home: /nonexistent     
+
+- name: create systemd unit
+  template:
+    src: templates/my_app.service.j2
+    dest: /etc/systemd/system/my_app.service
+  vars:
+    template_my_app_user: "{{ my_app_user }}"
+    template_my_app_directory: "{{ my_app_directory }}"
+  notify: restart my_app

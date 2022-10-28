@@ -1,0 +1,9 @@
+---
+- name: put caddy config
+  template:
+    dest: /etc/caddy/Caddyfile
+    src: "templates/Caddyfile.j2"
+  vars:
+    template_caddy_reverse_proxy: "{{ caddy_reverse_proxy }}"
+    template_caddy_external_listen_port: "{{ caddy_external_listen_port }}"
+  notify: restart_caddy

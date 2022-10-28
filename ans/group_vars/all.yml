@@ -1,0 +1,5 @@
+---
+local_my_app_directory: /opt/my_app
+local_my_app_socket: 127.0.0.1:5000
+local_external_listen_port: 80
+local_my_app_user: user

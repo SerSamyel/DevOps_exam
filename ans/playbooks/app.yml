@@ -1,0 +1,25 @@
+---
+- name: app play
+  hosts: app
+  gather_facts: no
+  become: yes
+
+  tasks:
+    - name: Install uwsgi
+      include_role:
+        name: uwsgi
+
+    - name: Install and run app
+      include_role:
+        name: app
+      vars:
+        my_app_directory: "{{ local_my_app_directory }}"
+        my_app_user: "{{ local_my_app_user }}"
+
+    - name: create service for uwsgi + app
+      include_role:
+        name: uwsgi
+        tasks_from: my_app.yml
+      vars:
+        uwsgi_my_app_directory: "{{ local_my_app_directory }}"
+        uwsgi_my_app_socket: "{{ local_my_app_socket }}"

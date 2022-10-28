@@ -1,0 +1,15 @@
+---
+- name: create app dirs recursively
+  file:
+    path: "{{ uwsgi_my_app_directory }}"
+    state: directory
+
+- name: create app.ini
+  template:
+    src: templates/my_app.j2
+    dest: "{{ uwsgi_my_app_directory }}/app.ini"
+  vars:
+    template_uwsgi_app_socket: "{{ uwsgi_my_app_socket }}"
+    template_uwsgi_my_app_directory: "{{ uwsgi_my_app_directory }}"
+  notify: restart uwsgi
+...

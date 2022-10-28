@@ -1,0 +1,17 @@
+[Unit]
+Description=uWSGI for my_app
+After=network.target
+
+[Service]
+User={{ template_my_app_user }}
+Group={{ template_my_app_user }}
+WorkingDirectory={{ template_my_app_directory }}
+ExecStart=/usr/bin/uwsgi --ini app.ini
+Environment="DB_HOST={{ app_db_connect_host }}"
+Environment="DB_USER={{ app_db_connect_user }}"
+Environment="DB_PORT={{ app_db_connect_port }}"
+Environment="DB_NAME={{ app_db_connect_name }}"
+Environment="DB_PASSWORD={{ app_db_connect_password }}"
+
+[Install]
+WantedBy=multi-user.target

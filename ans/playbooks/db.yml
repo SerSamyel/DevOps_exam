@@ -1,0 +1,15 @@
+---
+- name: db play
+  hosts: db
+  gather_facts: no
+  become: yes
+
+  tasks:
+    - name: Install postgresql
+      include_role:
+        name: postgresql
+    
+    - name: Configure postgresql
+      include_role:
+        name: postgresql
+        tasks_from: my_app.yml

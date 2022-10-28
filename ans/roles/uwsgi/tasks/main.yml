@@ -1,0 +1,9 @@
+---
+- name: install uwsgi
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  loop:
+    - uwsgi
+    - uwsgi-plugin-python3
+...
